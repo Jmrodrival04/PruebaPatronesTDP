@@ -1,0 +1,49 @@
+@startuml
+
+interface Elemento {
+    +getPrecio(): double
+    +getCodigo(): int
+}
+
+interface Descuento {
+    +aplicarDescuento(double precio): double
+}
+
+class DescuentoFijo {
+    -porcentajeDescuento: double
+    +DescuentoFijo(porcentajeDescuento: double)
+    +aplicarDescuento(double precio): double
+}
+
+class ElementoSimple {
+    -precio: double
+    -codigo: int
+    +ElementoSimple(codigo: int, precio: double)
+    +getPrecio(): double
+    +getCodigo(): int
+}
+
+class KitElemento {
+    -elementos: List<Elemento>
+    -codigo: int
+    -descuento: Descuento
+    +KitElemento(codigo: int, descuento: Descuento)
+    +agregarElemento(elemento: Elemento): void
+    +getPrecio(): double
+    +getCodigo(): int
+}
+
+class Main {
+    -todosElementos: List<Elemento>
+    -todosKits: List<KitElemento>
+    +main(args: String[]): void
+}
+
+Main --> ElementoSimple
+Main --> KitElemento
+
+Elemento <|.. ElementoSimple
+Elemento <|.. KitElemento
+Descuento <|.. DescuentoFijo
+
+@enduml
